@@ -90,14 +90,16 @@
     text-transform: uppercase;
     margin-bottom: 8px;
   }
-  #console {
-    font-size: 20px;
+  
+  /* Area log asli yang dipakai oleh skrip RAWGAME */
+  #msgs {
+    font-size: 18px;
     font-weight: 700;
     color: #2d2640;
-    margin-bottom: 8px;
-    line-height: 1.4;
     word-break: break-all;
+    min-height: 30px;
   }
+
   .progress-container { margin-top: 18px; }
   .progress-bar-bg {
     width: 100%;
@@ -109,9 +111,8 @@
   .progress-bar-fill {
     background: linear-gradient(90deg, #c084fc 0%, #ec4899 100%);
     height: 100%;
-    width: 30%;
+    width: 100%;
     border-radius: 999px;
-    transition: width 0.4s ease;
   }
   .footer-info {
     display: flex;
@@ -123,25 +124,13 @@
     border-top: 2px solid rgba(216, 180, 254, 0.3);
     font-weight: 600;
   }
-  .ok { color: #059669 !important; font-weight: 700; }
-  .bad { color: #e11d48 !important; font-weight: 700; }
-  .warn { color: #d97706 !important; font-weight: 700; }
-  
-  /* Biarkan elemen penampung log asli tetap aktif namun tersembunyi agar skrip eksploitasi membaca target elemennya */
-  #msgs {
-    position: absolute;
-    top: 0; left: 0;
-    opacity: 0.01;
-    pointer-events: none;
-    z-index: -99;
-  }
 </style>
 </head>
 <body>
   <div class="glass-panel">
     <div class="brand-header">
-      <h1>LytiaHEN Exploit ✿</h1>
-      <p class="subtitle">Executing jailbreak payload ✦</p>
+      <h1>LytiaHEN Exploit ★</h1>
+      <p class="subtitle">Executing jailbreak payload</p>
     </div>
     <div class="stack-container">
       <div class="chibi-floating-container">
@@ -150,7 +139,8 @@
       <div class="glass-card">
         <div>
           <div class="status-label">EXPLOIT STATUS</div>
-          <div id="console" class="warn">Running WebKit Exploit... ✧</div>
+          <!-- Elemen ID msgs ini murni dibiarkan tanpa gangguan observer agar skrip asli langsung menulis ke sini -->
+          <div id="msgs">Initializing...</div>
         </div>
         <div class="progress-container">
           <div class="progress-bar-bg">
@@ -160,60 +150,30 @@
       </div>
     </div>
     <div class="footer-info">
-      <span>Forked From RAWGAME ♥ UI By ayayashiori</span>
-      <span>Pstt, my name is Seka-chan! Get it? Because Orbis means world so is sekai ♡</span>
+      <span>Forked From RAWGAME | UI By ayayashiori</span>
+      <span>Pstt, my name is Seka-chan! Get it? Because Orbis means world so is sekai ♥</span>
     </div>
   </div>
 
-  <!-- Elemen wajib target skrip eksploitasi asli -->
-  <div id="msgs"></div>
-
 <script>
-  const consoleEl = document.getElementById('console');
+  // Opsional: Mengganti gambar chibi otomatis saat teks di msgs berubah
+  const msgsEl = document.getElementById('msgs');
   const imgEl = document.getElementById('chibi-img');
-  const progressBar = document.getElementById('progress-bar');
 
-  // Animasi progress bar bertahap agar tidak diam di tempat jika log lambat merespons
-  let progressVal = 30;
-  let progressInterval = setInterval(function() {
-    if (progressVal < 85) {
-      progressVal += 5;
-      progressBar.style.width = progressVal + '%';
-    }
-  }, 800);
-
-  const observer = new MutationObserver(function(mutations) {
-    const msgsDiv = document.getElementById('msgs');
-    if (msgsDiv && msgsDiv.lastChild) {
-      let text = msgsDiv.lastChild.textContent || "";
-      if (text.trim() !== "") {
-        consoleEl.textContent = text;
-      }
-      
-      if (text.includes("Done") || text.includes("Success") || text.includes("GoldHEN") || text.includes("Loaded")) {
-        clearInterval(progressInterval);
-        consoleEl.className = "ok";
+  if (msgsEl) {
+    const observer = new MutationObserver(() => {
+      let t = msgsEl.textContent || "";
+      if (t.includes("Done") || t.includes("Success") || t.includes("GoldHEN")) {
         imgEl.src = "chibi-success.png";
-        progressBar.style.width = "100%";
-        progressBar.style.background = "linear-gradient(90deg, #10b981 0%, #059669 100%)";
-      } else if (text.includes("Fail") || text.includes("Error") || text.includes("Out of memory")) {
-        clearInterval(progressInterval);
-        consoleEl.className = "bad";
+      } else if (t.includes("Fail") || t.includes("Error")) {
         imgEl.src = "chibi-failed.png";
-        progressBar.style.width = "100%";
-        progressBar.style.background = "linear-gradient(90deg, #f43f5e 0%, #e11d48 100%)";
       }
-    }
-  });
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const msgsDiv = document.getElementById('msgs');
-    if (msgsDiv) {
-      observer.observe(msgsDiv, { childList: true, subtree: true, characterData: true });
-    }
-  });
+    });
+    observer.observe(msgsEl, { childList: true, subtree: true, characterData: true });
+  }
 </script>
 
+<!-- Skrip inti bawaan asli RAWGAME -->
 <script src="int64.js"></script>
 <script src="jb.js"></script>
 <script src="core.js"></script>
