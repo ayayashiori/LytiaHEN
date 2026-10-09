@@ -1,190 +1,296 @@
-<!doctype html>
-<html lang="en" manifest="cache.appcache">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>LytiaHEN Exploit (◍•ᴗ•◍)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #f3edf9 0%, #e2d1f0 50%, #f7f2fb 100%);
-        color: #2d2640;
-        font-family: 'Quicksand', sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-      #brand {
-        text-align: center;
-        padding: 12px 16px;
-        background: rgba(244, 238, 250, 0.7);
-        border-bottom: 1px solid rgba(222, 196, 235, 0.4);
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-      #brand b {
-        font-size: 15px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        color: #5b3e7a;
-      }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LytiaHEN Exploit (◍•ᴗ•◍)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Quicksand', 'Poppins', sans-serif;
+    background: radial-gradient(circle at 50% 20%, #f3e8ff 0%, #d8b4fe 50%, #9333ea 100%);
+    color: #2d2640;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    overflow-x: hidden;
+    user-select: none;
+  }
 
-      /* Container card ala LytiaHEN */
-      .exploit-card {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(222, 196, 235, 0.6);
-        box-shadow: 0 20px 50px rgba(116, 90, 138, 0.15);
-        border-radius: 24px;
-        padding: 30px;
-        width: 90%;
-        max-width: 420px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-      }
+  .particles {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    animation: floatUp 8s linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(105vh) scale(0.5); opacity: 0; }
+    50% { opacity: 0.8; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+  }
 
-      /* Chibi preview di jb.html */
-      .chibi-mini-box {
-        width: 120px;
-        height: 120px;
-        background: #faf6fd;
-        border: 2px dashed #e2cff0;
-        border-radius: 50%;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-      }
-      .chibi-mini-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
+  .glass-panel {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 35px 70px rgba(85, 50, 115, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+    border-radius: 42px;
+    width: 100%;
+    max-width: 750px;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    animation: fadeIn 1s ease-out;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
 
-      /* Spinner imut nuansa anime */
-      #spin {
-        width: 40px;
-        height: 40px;
-        border: 4px solid #f0e6f6;
-        border-top-color: #d8b4fe;
-        border-radius: 50%;
-        animation: spin 0.9s linear infinite;
-        margin: 0 auto;
-      }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
+  .brand-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    padding-bottom: 20px;
+    text-align: center;
+  }
 
-      #msg {
-        font-size: 16px;
-        font-weight: 700;
-        color: #d97706;
-        line-height: 1.4;
-      }
+  h1 {
+    font-size: 40px;
+    font-weight: 700;
+    color: #3b2b4f;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    text-shadow: 0 2px 12px rgba(255, 255, 255, 0.7);
+  }
 
-      body.fail #msg {
-        color: #ef4444;
-      }
-      body.done #spin {
-        display: none;
-      }
-      body.fail #spin {
-        display: none;
-      }
+  .subtitle {
+    font-size: 16px;
+    color: #6a5585;
+    font-weight: 600;
+    margin: 0;
+    letter-spacing: 0.04em;
+  }
 
-      /* ?log=1 styling */
-      body.log #spin,
-      body.log .exploit-card {
-        display: none;
-      }
-      body.log #wrap {
-        padding: 80px 18px 20px;
-        width: 100%;
-        max-width: 620px;
-        display: block !important;
-      }
-      #wrap {
-        display: none;
-      }
-      #state {
-        font-size: 20px;
-        font-weight: 700;
-        color: #3b2b4f;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-      #out {
-        white-space: pre-wrap;
-        font: 12px/1.45 Consolas, monospace;
-        background: rgba(255, 255, 255, 0.85);
-        border: 1px solid rgba(222, 196, 235, 0.6);
-        border-radius: 16px;
-        padding: 16px;
-        height: calc(100vh - 160px);
-        overflow-y: auto;
-        color: #5b3e7a;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="brand">
-      <b>LytiaHEN Exploit (っ˘ω˘ς)</b>
+  .stack-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .chibi-floating-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 10px 0;
+  }
+  .chibi-floating-container::after {
+    content: '';
+    position: absolute;
+    width: 180px; height: 40px;
+    background: rgba(184, 134, 251, 0.4);
+    bottom: 0;
+    border-radius: 50%;
+    filter: blur(14px);
+    z-index: -1;
+    animation: pulseGlow 3s ease-in-out infinite;
+  }
+  @keyframes pulseGlow {
+    0%, 100% { transform: scale(1); opacity: 0.4; }
+    50% { transform: scale(1.25); opacity: 0.85; }
+  }
+
+  #chibi-img {
+    width: 220px;
+    height: 220px;
+    object-fit: contain;
+    filter: drop-shadow(0 18px 30px rgba(116, 90, 138, 0.35));
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 28px;
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 15px 35px rgba(116, 90, 138, 0.12);
+  }
+
+  .status-label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: #8c73ab;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  #console, #log {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d2640;
+    margin-bottom: 8px;
+    line-height: 1.4;
+    word-break: break-all;
+  }
+
+  .progress-container { margin-top: 22px; }
+  .progress-bar-bg {
+    width: 100%;
+    background-color: rgba(230, 215, 245, 0.8);
+    height: 12px;
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 5px rgba(0,0,0,0.08);
+  }
+  .progress-bar-fill {
+    background: linear-gradient(90deg, #c084fc 0%, #ec4899 100%);
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    box-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
+    transition: width 0.3s ease;
+  }
+
+  .footer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #7b6499;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+  }
+
+  .ok { color: #059669 !important; font-weight: 700; }
+  .bad { color: #e11d48 !important; font-weight: 700; }
+  .warn { color: #d97706 !important; font-weight: 700; }
+  
+  #msgs { display: none; }
+</style>
+</head>
+<body>
+
+  <div class="particles" id="particles"></div>
+
+  <div class="glass-panel">
+    <div class="brand-header">
+      <h1>LytiaHEN Exploit (⁠*⁠´⁠ω⁠｀⁠*⁠)</h1>
+      <p class="subtitle">Executing jailbreak payload (๑>◡<๑)</p>
     </div>
 
-    <!-- Kotak Tampilan Eksploitasi yang Senada dengan index.html -->
-    <div class="exploit-card" id="exploit-ui">
-      <div class="chibi-mini-box">
-        <img id="jb-chibi" src="chibi-loading.png" alt="Chibi">
+    <div class="stack-container">
+      
+      <div class="chibi-floating-container">
+        <img id="chibi-img" src="chibi-loading.png" alt="Chibi">
       </div>
-      <div id="spin"></div>
-      <div id="msg">Please wait, I'm accessing your RAM! (っ˘ω˘ς)</div>
+
+      <div class="glass-card">
+        <div>
+          <div class="status-label">EXPLOIT STATUS</div>
+          <div id="console" class="warn">Initializing environment... (っ˘ω˘ς)</div>
+          <div id="log"></div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar-bg">
+            <div id="progress-bar" class="progress-bar-fill" style="width: 25%;"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
-    <div id="wrap">
-      <div id="state"></div>
-      <div id="out"></div>
+    <div class="footer-info">
+      <span>Forked From RAWGAME ♡ UI Designed By ayayashiori</span>
+      <span>Keep calm & exploit (◡‿◡✿)</span>
     </div>
+  </div>
 
-    <script>
-      // Listener otomatis untuk mengubah gambar chibi saat proses jb.js mengubah status/kelas body
-      const observer = new MutationObserver(() => {
-        const img = document.getElementById('jb-chibi');
-        const msg = document.getElementById('msg');
-        if (document.body.classList.contains('done')) {
-          img.src = 'chibi-success.png';
-          msg.textContent = "Done! Enjoy your game, Bro! (≧◡≦) ♡";
-          msg.style.color = "#16a34a";
-        } else if (document.body.classList.contains('fail')) {
-          img.src = 'chibi-failed.png';
-          msg.textContent = "Uwaahhh! Exploit failed, please restart your console! (╥﹏╥)";
-          msg.style.color = "#ef4444";
-        }
-      });
-      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    </script>
+  <div id="msgs"></div>
 
-    <script type="module">
-      import "./jb.js?v=10";
-    </script>
-  </body>
+<script>
+  const particleContainer = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 10 + 5;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (Math.random() * 6 + 5) + 's';
+    p.style.animationDelay = (Math.random() * 5) + 's';
+    particleContainer.appendChild(p);
+  }
+
+  const consoleEl = document.getElementById('console');
+  const logEl = document.getElementById('log');
+  const imgEl = document.getElementById('chibi-img');
+  const progressBar = document.getElementById('progress-bar');
+
+  const observer = new MutationObserver(function(mutations) {
+    const msgsDiv = document.getElementById('msgs');
+    if (msgsDiv && msgsDiv.lastChild) {
+      let text = msgsDiv.lastChild.textContent || "";
+      consoleEl.textContent = text;
+      
+      if (text.includes("Done") || text.includes("Success") || text.includes("GoldHEN")) {
+        consoleEl.className = "ok";
+        imgEl.src = "chibi-success.png";
+        progressBar.style.width = "100%";
+        progressBar.style.background = "linear-gradient(90deg, #10b981 0%, #059669 100%)";
+      } else if (text.includes("Fail") || text.includes("Error") || text.includes("Out of memory")) {
+        consoleEl.className = "bad";
+        imgEl.src = "chibi-failed.png";
+        progressBar.style.background = "linear-gradient(90deg, #f43f5e 0%, #e11d48 100%)";
+      } else {
+        consoleEl.className = "warn";
+        imgEl.src = "chibi-loading.png";
+        progressBar.style.width = "75%";
+      }
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const msgsDiv = document.getElementById('msgs');
+    if (msgsDiv) {
+      observer.observe(msgsDiv, { childList: true, subtree: true });
+    }
+  });
+</script>
+
+<script src="int64.js"></script>
+<script src="jb.js"></script>
+<script src="core.js"></script>
+</body>
 </html>
