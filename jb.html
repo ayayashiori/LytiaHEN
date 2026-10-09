@@ -1,181 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LytiaHEN Exploit ★</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-<style>
-  * { box-sizing: border-box; }
-  body {
-    font-family: 'Quicksand', 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
-    color: #2d2640;
-    min-height: 100vh;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 30px;
-    overflow-x: hidden;
-    user-select: none;
-  }
-  .glass-panel {
-    background: rgba(255, 255, 255, 0.85);
-    border: 2px solid rgba(255, 255, 255, 0.95);
-    box-shadow: 0 20px 40px rgba(116, 90, 138, 0.2);
-    border-radius: 36px;
-    width: 100%;
-    max-width: 750px;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-  .brand-header {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    border-bottom: 2px solid rgba(216, 180, 254, 0.3);
-    padding-bottom: 16px;
-    text-align: center;
-  }
-  h1 {
-    font-size: 38px;
-    font-weight: 700;
-    color: #4c1d95;
-    margin: 0;
-  }
-  .subtitle {
-    font-size: 15px;
-    color: #7c3aed;
-    font-weight: 600;
-    margin: 0;
-  }
-  .stack-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  .chibi-floating-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 5px 0;
-  }
-  #chibi-img {
-    width: 200px;
-    height: 200px;
-    object-fit: contain;
-    filter: drop-shadow(0 10px 20px rgba(116, 90, 138, 0.25));
-  }
-  .glass-card {
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(233, 213, 255, 0.8);
-    border-radius: 24px;
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: 0 8px 20px rgba(116, 90, 138, 0.08);
-  }
-  .status-label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    color: #9333ea;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  
-  /* Area log asli yang dipakai oleh skrip RAWGAME */
-  #msgs {
-    font-size: 18px;
-    font-weight: 700;
-    color: #2d2640;
-    word-break: break-all;
-    min-height: 30px;
-  }
-
-  .progress-container { margin-top: 18px; }
-  .progress-bar-bg {
-    width: 100%;
-    background-color: #f3e8ff;
-    height: 12px;
-    border-radius: 999px;
-    overflow: hidden;
-  }
-  .progress-bar-fill {
-    background: linear-gradient(90deg, #c084fc 0%, #ec4899 100%);
-    height: 100%;
-    width: 100%;
-    border-radius: 999px;
-  }
-  .footer-info {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: #7c3aed;
-    padding-top: 12px;
-    border-top: 2px solid rgba(216, 180, 254, 0.3);
-    font-weight: 600;
-  }
-</style>
-</head>
-<body>
-  <div class="glass-panel">
-    <div class="brand-header">
-      <h1>LytiaHEN Exploit ★</h1>
-      <p class="subtitle">Executing jailbreak payload</p>
-    </div>
-    <div class="stack-container">
-      <div class="chibi-floating-container">
-        <img id="chibi-img" src="chibi-loading.png" alt="Chibi">
-      </div>
-      <div class="glass-card">
-        <div>
-          <div class="status-label">EXPLOIT STATUS</div>
-          <!-- Elemen ID msgs ini murni dibiarkan tanpa gangguan observer agar skrip asli langsung menulis ke sini -->
-          <div id="msgs">Initializing...</div>
-        </div>
-        <div class="progress-container">
-          <div class="progress-bar-bg">
-            <div id="progress-bar" class="progress-bar-fill"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="footer-info">
-      <span>Forked From RAWGAME | UI By ayayashiori</span>
-      <span>Pstt, my name is Seka-chan! Get it? Because Orbis means world so is sekai ♥</span>
-    </div>
-  </div>
-
-<script>
-  // Opsional: Mengganti gambar chibi otomatis saat teks di msgs berubah
-  const msgsEl = document.getElementById('msgs');
-  const imgEl = document.getElementById('chibi-img');
-
-  if (msgsEl) {
-    const observer = new MutationObserver(() => {
-      let t = msgsEl.textContent || "";
-      if (t.includes("Done") || t.includes("Success") || t.includes("GoldHEN")) {
-        imgEl.src = "chibi-success.png";
-      } else if (t.includes("Fail") || t.includes("Error")) {
-        imgEl.src = "chibi-failed.png";
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>LytiaHEN Exploit ★</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
+        color: #2d2640;
+        font-family: 'Quicksand', 'Poppins', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+        user-select: none;
       }
-    });
-    observer.observe(msgsEl, { childList: true, subtree: true, characterData: true });
-  }
-</script>
 
-<!-- Skrip inti bawaan asli RAWGAME -->
-<script src="int64.js"></script>
-<script src="jb.js"></script>
-<script src="core.js"></script>
-</body>
+      /* Panel Utama ala Glassmorphism Ringan */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.85);
+        border: 2px solid rgba(255, 255, 255, 0.95);
+        box-shadow: 0 20px 40px rgba(116, 90, 138, 0.2);
+        border-radius: 36px;
+        width: 100%;
+        max-width: 750px;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Brand Header yang disesuaikan */
+      #brand {
+        text-align: center;
+        padding-bottom: 16px;
+        border-bottom: 2px solid rgba(216, 180, 254, 0.3);
+        background: transparent;
+      }
+      #brand img {
+        width: 48px;
+        height: 48px;
+        margin-right: 10px;
+        border-radius: 50%;
+        vertical-align: middle;
+        object-fit: cover;
+      }
+      #brand b {
+        font-size: 32px;
+        font-weight: 700;
+        color: #4c1d95;
+        letter-spacing: 0.05em;
+        vertical-align: middle;
+      }
+
+      /* Chibi Maskot Container */
+      .chibi-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 0;
+      }
+      #chibi-img {
+        width: 180px;
+        height: 180px;
+        object-fit: contain;
+        filter: drop-shadow(0 10px 20px rgba(116, 90, 138, 0.25));
+      }
+
+      /* Status Card */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(233, 213, 255, 0.8);
+        border-radius: 24px;
+        padding: 24px;
+        box-shadow: 0 8px 20px rgba(116, 90, 138, 0.08);
+        text-align: center;
+      }
+      .status-label {
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: #9333ea;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+
+      /* Spinner bawaan asli yang dipercantik posisinya */
+      #spin {
+        width: 45px;
+        height: 45px;
+        margin: 15px auto 0 auto;
+        border: 4px solid #e9d5ff;
+        border-top-color: #9333ea;
+        border-radius: 50%;
+        animation: spin 0.9s linear infinite;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      #msg {
+        font-size: 18px;
+        font-weight: 700;
+        color: #e11d48;
+        margin-top: 10px;
+        display: none;
+      }
+
+      #wrap {
+        padding: 0;
+      }
+      #state, #out {
+        display: none;
+      }
+
+      body.done #spin { display: none; }
+      body.fail #spin { display: none; }
+      body.fail #msg { display: block; }
+
+      /* Log mode (?log=1) */
+      body.log #spin, body.log #msg, body.log .chibi-container, body.log .brand-header-sub {
+        display: none;
+      }
+      body.log #wrap {
+        width: 100%;
+      }
+      body.log #state {
+        display: block;
+        font-size: 20px;
+        font-weight: 700;
+        color: #4c1d95;
+        margin-bottom: 12px;
+        text-align: left;
+      }
+      body.log #out {
+        display: block;
+        white-space: pre-wrap;
+        font: 13px/1.45 Consolas, monospace;
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(233, 213, 255, 0.8);
+        border-radius: 16px;
+        padding: 16px;
+        height: 250px;
+        overflow-y: auto;
+        color: #2d2640;
+      }
+
+      .footer-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 12px;
+        color: #7c3aed;
+        padding-top: 12px;
+        border-top: 2px solid rgba(216, 180, 254, 0.3);
+        font-weight: 600;
+      }
+
+      .ok { color: #059669 !important; }
+      .bad { color: #e11d48 !important; }
+      .warn { color: #d97706 !important; }
+      .safe { color: #059669 !important; }
+      .danger { color: #e11d48 !important; }
+      code { color: #7c3aed; }
+    </style>
+  </head>
+  <body>
+    <div class="glass-panel">
+      <!-- Brand Section sesuai struktur asli[span_4](start_span)[span_4](end_span) -->
+      <div id="brand">
+        <img src="chibi-loading.png" alt="Logo" id="chibi-img" />
+        <b>LytiaHEN Exploit ★</b>
+      </div>
+
+      <div class="chibi-container">
+        <!-- Elemen visual pendukung -->
+        <div style="font-size: 15px; font-weight: 600; color: #7c3aed; text-align: center;">
+          Executing jailbreak payload...
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="status-label">EXPLOIT STATUS</div>
+        <!-- Elemen kontrol asli RAWGAME[span_5](start_span)[span_5](end_span) -->
+        <div id="spin"></div>
+        <div id="msg">Restart your console</div>
+        <div id="wrap">
+          <div id="state"></div>
+          <div id="out"></div>
+        </div>
+      </div>
+
+      <div class="footer-info">
+        <span>Forked From RAWGAME | UI By ayayashiori</span>
+        <span>Pstt, my name is Seka-chan! Get it? Because Orbis means world so is sekai ♥</span>
+      </div>
+    </div>
+
+    <!-- Skrip modul utama bawaan RAWGAME[span_6](start_span)[span_6](end_span) -->
+    <script type="module">
+      import "./jb.js?v=10";
+      
+      // Skrip pemantau ringan untuk mengganti ekspresi maskot chibi saat status selesai/gagal
+      const observer = new MutationObserver(() => {
+        const bodyClass = document.body.className;
+        const chibiImg = document.getElementById('chibi-img');
+        if (bodyClass.includes('done')) {
+          chibiImg.src = 'chibi-success.png';
+        } else if (bodyClass.includes('fail')) {
+          chibiImg.src = 'chibi-failed.png';
+        }
+      });
+      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    </script>
+  </body>
 </html>
