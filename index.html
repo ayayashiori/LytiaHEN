@@ -141,7 +141,7 @@
   <div class="glass-panel">
     <div class="brand-header">
       <h1>LytiaHEN ✿</h1>
-      <p class="subtitle">Your ultimate console companion </p>
+      <p class="subtitle">Your ultimate console companion</p>
     </div>
     <div class="stack-container">
       <div class="chibi-floating-container">
@@ -157,7 +157,7 @@
           <div class="progress-bar-bg">
             <div id="progress-bar" class="progress-bar-fill"></div>
           </div>
-          <div id="cache">Offline ready & cached </div>
+          <div id="cache">Offline ready & cached</div>
         </div>
       </div>
     </div>
@@ -171,6 +171,12 @@
       var stateEl = document.getElementById("state");
       var detEl = document.getElementById("det");
       var imgEl = document.getElementById("chibi-img");
+      
+      function setState(msg, cls) {
+          stateEl.textContent = msg;
+          stateEl.className = cls || "";
+      }
+
       var params = new URLSearchParams(location.search);
       var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
       var key = null, fwnum = null;
@@ -183,22 +189,28 @@
       }
       var forced = params.get("force") === "1";
       var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
+      
       detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
           + (supported ? " &middot; <span class='ok'>supported :3</span>"
                        : " &middot; <span class='bad'>not in kernel table</span>");
+
       var target = "jb.html" + location.search;
-      if (!supported) {
+
+      // Jika tidak didukung dan tidak dipaksa, berhenti di sini
+      if (!supported && !forced) {
           setState("UNSUPPORTED FIRMWARE ✕", "bad");
           imgEl.src = "chibi-failed.png";
           return;
       }
+
+      // Langsung proses pindah ke jb.html setelah jeda singkat
       setTimeout(function() {
           setState("Loading exploit payload... ➔", "warn");
           imgEl.src = "chibi-loading.png";
           setTimeout(function() {
               location.replace(target);
-          }, 600);
-      }, 800);
+          }, 500);
+      }, 700);
   })();
 </script>
 </body>
