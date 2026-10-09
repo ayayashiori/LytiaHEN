@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SekaHEN Exploit (っ˘ω˘ς)</title>
+<title>SekaHEN Exploit (っ˘ω˘ς) </title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -98,11 +98,11 @@
     line-height: 1.4;
   }
   
-  /* Spinner bawaan RAWGAME[span_1](start_span)[span_1](end_span) */
+  /* Area elemen asli RAWGAME yang disesuaikan tampilannya agar serasi */
   #spin {
     width: 40px;
     height: 40px;
-    margin: 15px auto 5px auto;
+    margin: 10px auto;
     border: 4px solid #e9d5ff;
     border-top-color: #9333ea;
     border-radius: 50%;
@@ -117,14 +117,45 @@
     color: #e11d48;
     margin-top: 8px;
     display: none;
-    text-align: center;
   }
   #wrap { padding: 0; }
   
+  /* Sembunyikan elemen mentah saat normal, munculkan saat mode log (?log=1) */
   body.done #spin { display: none; }
   body.fail #spin { display: none; }
   body.fail #msg { display: block; }
   
+  body.log #spin, body.log #msg, body.log .chibi-floating-container { display: none; }
+  body.log #state { display: block; font-size: 20px; color: #4c1d95; }
+  body.log #out {
+    display: block;
+    white-space: pre-wrap;
+    font: 12px/1.45 Consolas, monospace;
+    background: #ffffff;
+    border: 1px solid rgba(233, 213, 255, 0.8);
+    border-radius: 12px;
+    padding: 12px;
+    height: 200px;
+    overflow-y: auto;
+    color: #2d2640;
+    margin-top: 10px;
+  }
+
+  .progress-container { margin-top: 18px; }
+  .progress-bar-bg {
+    width: 100%;
+    background-color: #f3e8ff;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    background: linear-gradient(90deg, #c084fc 0%, #ec4899 100%);
+    height: 100%;
+    width: 100%;
+    border-radius: 999px;
+  }
+
   .footer-info {
     display: flex;
     justify-content: space-between;
@@ -143,7 +174,7 @@
 <body class="safe">
   <div class="glass-panel">
     <div class="brand-header">
-      <h1>SekaHEN Loader (っ˘ω˘ς)</h1>
+      <h1>SekaHEN Loader (っ˘ω˘ς) </h1>
       <p class="subtitle">Here we go~</p>
     </div>
 
@@ -155,13 +186,19 @@
       <div class="glass-card">
         <div>
           <div class="status-label">Seka-Chan Status</div>
-          <div id="state">Seka-chan is looking for vulnerabilities...</div>
+          <div id="state">Seka-Chan is looking for vulnerabilities... </div>
           
-          <!-- Elemen kontrol inti RAWGAME[span_2](start_span)[span_2](end_span) -->
+          <!-- Elemen kontrol inti RAWGAME -->
           <div id="spin"></div>
           <div id="msg">Uh oh, I messed up! better start over now TwT</div>
           <div id="wrap">
             <div id="out"></div>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar-bg">
+            <div id="progress-bar" class="progress-bar-fill"></div>
           </div>
         </div>
       </div>
@@ -174,36 +211,29 @@
   </div>
 
 <script type="module">
-  import "./jb.js?v=10";[span_3](start_span)[span_3](end_span)
+  import "./jb.js?v=10";
 
   const chibiImg = document.getElementById("chibi-img");
   const stateEl = document.getElementById("state");
-  const msgEl = document.getElementById("msg");
-  let isLocked = false;
+  const progressBar = document.getElementById("progress-bar");
 
-  const checkStatus = () => {
-    if (isLocked) return; // Kalau sudah terkunci status sukses/gagal, jangan diubah lagi
-
+  // Memantau perubahan status dari skrip modul RAWGAME secara aman
+  const observer = new MutationObserver(() => {
     const bodyClass = document.body.className;
-    const isMsgVisible = window.getComputedStyle(msgEl).display !== "none" || bodyClass.includes("fail");
-    const isDone = bodyClass.includes("done");
-
-    if (isDone) {
-      isLocked = true;
+    if (bodyClass.includes("done")) {
       chibiImg.src = "chibi-success.png";
       stateEl.textContent = "Seka-chan Did it! ♥";
       stateEl.className = "ok";
-    } else if (isMsgVisible) {
-      isLocked = true;
+      progressBar.style.background = "linear-gradient(90deg, #10b981 0%, #059669 100%)";
+    } else if (bodyClass.includes("fail")) {
       chibiImg.src = "chibi-failed.png";
       stateEl.textContent = "Seka-chan couldn't do it... TwT";
       stateEl.className = "bad";
+      progressBar.style.background = "linear-gradient(90deg, #f43f5e 0%, #e11d48 100%)";
     }
-  };
+  });
 
-  const observer = new MutationObserver(checkStatus);
   observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-  observer.observe(msgEl, { attributes: true, attributeFilter: ["style"] });
 </script>
 </body>
 </html>
