@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LytiaHEN</title>
+<title>LytiaHEN ★</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -140,8 +140,8 @@
 <body>
   <div class="glass-panel">
     <div class="brand-header">
-      <h1>LytiaHEN</h1>
-      <p class="subtitle">Your ultimate console companion</p>
+      <h1>LytiaHEN ✿</h1>
+      <p class="subtitle">Your ultimate console companion ✦</p>
     </div>
     <div class="stack-container">
       <div class="chibi-floating-container">
@@ -150,20 +150,20 @@
       <div class="glass-card">
         <div>
           <div class="status-label">SYSTEM STATUS</div>
-          <div id="state">Ready to launch!</div>
+          <div id="state">Ready to launch! ♥</div>
           <div id="det"></div>
         </div>
         <div class="progress-container">
           <div class="progress-bar-bg">
             <div id="progress-bar" class="progress-bar-fill"></div>
           </div>
-          <div id="cache">Offline ready & cached</div>
+          <div id="cache">Offline ready & cached ✧</div>
         </div>
       </div>
     </div>
     <div class="footer-info">
       <span>Forked From RAWGAME | UI By ayayashiori</span>
-      <span>Made with love</span>
+      <span>Made with love ♡</span>
     </div>
   </div>
 <script>
@@ -184,16 +184,16 @@
       var forced = params.get("force") === "1";
       var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
       detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
-          + (supported ? " &middot; <span class='ok'>supported</span>"
+          + (supported ? " &middot; <span class='ok'>supported ✦</span>"
                        : " &middot; <span class='bad'>not in kernel table</span>");
       var target = "jb.html" + location.search;
       if (!supported) {
-          setState("UNSUPPORTED FIRMWARE", "bad");
+          setState("UNSUPPORTED FIRMWARE ✕", "bad");
           imgEl.src = "chibi-failed.png";
           return;
       }
       setTimeout(function() {
-          setState("Loading exploit payload...", "warn");
+          setState("Loading exploit payload... ➔", "warn");
           imgEl.src = "chibi-loading.png";
           setTimeout(function() {
               location.replace(target);
