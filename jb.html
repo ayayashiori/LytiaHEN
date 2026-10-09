@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LytiaHEN Exploit</title>
+<title>LytiaHEN Exploit ★</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -109,7 +109,7 @@
   .progress-bar-fill {
     background: linear-gradient(90deg, #c084fc 0%, #ec4899 100%);
     height: 100%;
-    width: 15%;
+    width: 30%;
     border-radius: 999px;
     transition: width 0.4s ease;
   }
@@ -126,14 +126,22 @@
   .ok { color: #059669 !important; font-weight: 700; }
   .bad { color: #e11d48 !important; font-weight: 700; }
   .warn { color: #d97706 !important; font-weight: 700; }
-  #msgs { display: none; }
+  
+  /* Biarkan elemen penampung log asli tetap aktif namun tersembunyi agar skrip eksploitasi membaca target elemennya */
+  #msgs {
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0.01;
+    pointer-events: none;
+    z-index: -99;
+  }
 </style>
 </head>
 <body>
   <div class="glass-panel">
     <div class="brand-header">
-      <h1>LytiaHEN Exploit</h1>
-      <p class="subtitle">Executing jailbreak payload</p>
+      <h1>LytiaHEN Exploit ✿</h1>
+      <p class="subtitle">Executing jailbreak payload ✦</p>
     </div>
     <div class="stack-container">
       <div class="chibi-floating-container">
@@ -142,7 +150,7 @@
       <div class="glass-card">
         <div>
           <div class="status-label">EXPLOIT STATUS</div>
-          <div id="console" class="warn">Initializing environment...</div>
+          <div id="console" class="warn">Running WebKit Exploit... ✧</div>
         </div>
         <div class="progress-container">
           <div class="progress-bar-bg">
@@ -153,47 +161,59 @@
     </div>
     <div class="footer-info">
       <span>Forked From RAWGAME | UI By ayayashiori</span>
-      <span>Keep calm & exploit</span>
+      <span>Keep calm & exploit ♡</span>
     </div>
   </div>
+
+  <!-- Elemen wajib target skrip eksploitasi asli -->
   <div id="msgs"></div>
+
 <script>
   const consoleEl = document.getElementById('console');
   const imgEl = document.getElementById('chibi-img');
   const progressBar = document.getElementById('progress-bar');
+
+  // Animasi progress bar bertahap agar tidak diam di tempat jika log lambat merespons
+  let progressVal = 30;
+  let progressInterval = setInterval(function() {
+    if (progressVal < 85) {
+      progressVal += 5;
+      progressBar.style.width = progressVal + '%';
+    }
+  }, 800);
+
   const observer = new MutationObserver(function(mutations) {
     const msgsDiv = document.getElementById('msgs');
     if (msgsDiv && msgsDiv.lastChild) {
       let text = msgsDiv.lastChild.textContent || "";
-      consoleEl.textContent = text;
-      if (text.includes("Done") || text.includes("Success") || text.includes("GoldHEN")) {
+      if (text.trim() !== "") {
+        consoleEl.textContent = text;
+      }
+      
+      if (text.includes("Done") || text.includes("Success") || text.includes("GoldHEN") || text.includes("Loaded")) {
+        clearInterval(progressInterval);
         consoleEl.className = "ok";
         imgEl.src = "chibi-success.png";
         progressBar.style.width = "100%";
         progressBar.style.background = "linear-gradient(90deg, #10b981 0%, #059669 100%)";
       } else if (text.includes("Fail") || text.includes("Error") || text.includes("Out of memory")) {
+        clearInterval(progressInterval);
         consoleEl.className = "bad";
         imgEl.src = "chibi-failed.png";
         progressBar.style.width = "100%";
         progressBar.style.background = "linear-gradient(90deg, #f43f5e 0%, #e11d48 100%)";
-      } else if (text.includes("Jumping") || text.includes("Spray") || text.includes("WebKit")) {
-        consoleEl.className = "warn";
-        imgEl.src = "chibi-loading.png";
-        progressBar.style.width = "75%";
-      } else {
-        consoleEl.className = "warn";
-        imgEl.src = "chibi-loading.png";
-        progressBar.style.width = "45%";
       }
     }
   });
+
   window.addEventListener('DOMContentLoaded', () => {
     const msgsDiv = document.getElementById('msgs');
     if (msgsDiv) {
-      observer.observe(msgsDiv, { childList: true, subtree: true });
+      observer.observe(msgsDiv, { childList: true, subtree: true, characterData: true });
     }
   });
 </script>
+
 <script src="int64.js"></script>
 <script src="jb.js"></script>
 <script src="core.js"></script>
