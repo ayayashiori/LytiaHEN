@@ -3,12 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SekaHEN Exploit (っ˘ω˘ς) </title>
+<title>SekaHEN Exploit (っ˘ω˘ς)</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
 <style>
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     font-family: 'Quicksand', 'Poppins', sans-serif;
     background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
@@ -23,6 +28,7 @@
     overflow-x: hidden;
     user-select: none;
   }
+
   .glass-panel {
     background: rgba(255, 255, 255, 0.85);
     border: 2px solid rgba(255, 255, 255, 0.95);
@@ -35,6 +41,7 @@
     flex-direction: column;
     gap: 24px;
   }
+
   .brand-header {
     display: flex;
     flex-direction: column;
@@ -43,35 +50,41 @@
     padding-bottom: 16px;
     text-align: center;
   }
+
   h1 {
     font-size: 38px;
     font-weight: 700;
     color: #4c1d95;
     margin: 0;
   }
+
   .subtitle {
     font-size: 15px;
     color: #7c3aed;
     font-weight: 600;
     margin: 0;
   }
+
   .stack-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
+
   .chibi-floating-container {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 5px 0;
   }
+
   #chibi-img {
     width: 200px;
     height: 200px;
     object-fit: contain;
     filter: drop-shadow(0 10px 20px rgba(116, 90, 138, 0.25));
   }
+
   .glass-card {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(233, 213, 255, 0.8);
@@ -82,6 +95,7 @@
     justify-content: space-between;
     box-shadow: 0 8px 20px rgba(116, 90, 138, 0.08);
   }
+
   .status-label {
     font-size: 12px;
     font-weight: 700;
@@ -90,6 +104,7 @@
     text-transform: uppercase;
     margin-bottom: 8px;
   }
+
   #state {
     font-size: 20px;
     font-weight: 700;
@@ -97,8 +112,8 @@
     margin-bottom: 8px;
     line-height: 1.4;
   }
-  
-  /* Area elemen asli RAWGAME yang disesuaikan tampilannya agar serasi */
+
+  /* Spinner */
   #spin {
     width: 40px;
     height: 40px;
@@ -108,9 +123,13 @@
     border-radius: 50%;
     animation: spin 0.9s linear infinite;
   }
+
   @keyframes spin {
-    to { transform: rotate(360deg); }
+    to {
+      transform: rotate(360deg);
+    }
   }
+
   #msg {
     font-size: 16px;
     font-weight: 700;
@@ -118,15 +137,34 @@
     margin-top: 8px;
     display: none;
   }
-  #wrap { padding: 0; }
-  
-  /* Sembunyikan elemen mentah saat normal, munculkan saat mode log (?log=1) */
-  body.done #spin { display: none; }
-  body.fail #spin { display: none; }
-  body.fail #msg { display: block; }
-  
-  body.log #spin, body.log #msg, body.log .chibi-floating-container { display: none; }
-  body.log #state { display: block; font-size: 20px; color: #4c1d95; }
+
+  #wrap {
+    padding: 0;
+  }
+
+  /* Sembunyikan spinner saat proses selesai atau gagal */
+  body.done #spin,
+  body.fail #spin {
+    display: none;
+  }
+
+  body.fail #msg {
+    display: block;
+  }
+
+  /* Mode log */
+  body.log #spin,
+  body.log #msg,
+  body.log .chibi-floating-container {
+    display: none;
+  }
+
+  body.log #state {
+    display: block;
+    font-size: 20px;
+    color: #4c1d95;
+  }
+
   body.log #out {
     display: block;
     white-space: pre-wrap;
@@ -141,21 +179,6 @@
     margin-top: 10px;
   }
 
-  .progress-container { margin-top: 18px; }
-  .progress-bar-bg {
-    width: 100%;
-    background-color: #f3e8ff;
-    height: 10px;
-    border-radius: 999px;
-    overflow: hidden;
-  }
-  .progress-bar-fill {
-    background: linear-gradient(90deg, #c084fc 0%, #ec4899 100%);
-    height: 100%;
-    width: 100%;
-    border-radius: 999px;
-  }
-
   .footer-info {
     display: flex;
     justify-content: space-between;
@@ -165,49 +188,104 @@
     padding-top: 12px;
     border-top: 2px solid rgba(216, 180, 254, 0.3);
     font-weight: 600;
+    gap: 12px;
   }
-  .ok { color: #059669 !important; font-weight: 700; }
-  .bad { color: #e11d48 !important; font-weight: 700; }
-  .warn { color: #d97706 !important; font-weight: 700; }
+
+  .ok {
+    color: #059669 !important;
+    font-weight: 700;
+  }
+
+  .bad {
+    color: #e11d48 !important;
+    font-weight: 700;
+  }
+
+  .warn {
+    color: #d97706 !important;
+    font-weight: 700;
+  }
+
+  /* Tampilan layar kecil */
+  @media (max-width: 600px) {
+    body {
+      padding: 16px;
+    }
+
+    .glass-panel {
+      padding: 24px 18px;
+      border-radius: 28px;
+    }
+
+    h1 {
+      font-size: 28px;
+    }
+
+    #chibi-img {
+      width: 160px;
+      height: 160px;
+    }
+
+    .glass-card {
+      padding: 18px;
+    }
+
+    .footer-info {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
 </style>
 </head>
+
 <body class="safe">
   <div class="glass-panel">
+
     <div class="brand-header">
-      <h1>SekaHEN Loader (っ˘ω˘ς) </h1>
+      <h1>SekaHEN Loader (っ˘ω˘ς)</h1>
       <p class="subtitle">Here we go~</p>
     </div>
 
     <div class="stack-container">
+
       <div class="chibi-floating-container">
-        <img id="chibi-img" src="chibi-loading.png" alt="Chibi">
+        <img
+          id="chibi-img"
+          src="chibi-loading.png"
+          alt="Chibi Seka-chan"
+        >
       </div>
 
       <div class="glass-card">
         <div>
           <div class="status-label">Seka-Chan Status</div>
-          <div id="state">Seka-Chan is looking for vulnerabilities... </div>
-          
+
+          <div id="state">
+            Seka-Chan is looking for vulnerabilities...
+          </div>
+
           <!-- Elemen kontrol inti RAWGAME -->
           <div id="spin"></div>
-          <div id="msg">Uh oh, I messed up! better start over now TwT</div>
+
+          <div id="msg">
+            Uh oh, I messed up! Better start over now TwT
+          </div>
+
           <div id="wrap">
             <div id="out"></div>
           </div>
         </div>
-
-        <div class="progress-container">
-          <div class="progress-bar-bg">
-            <div id="progress-bar" class="progress-bar-fill"></div>
-          </div>
-        </div>
       </div>
+
     </div>
 
     <div class="footer-info">
       <span>Forked From RAWGAME ♥ UI By ayayashiori</span>
-      <span>Psst! I'm Seka-chan! Orbis means world, and sekai means world in Japanese. Get it? ♥</span>
+      <span>
+        Psst! I'm Seka-chan! Orbis means world, and sekai means world in Japanese. Get it? ♥
+      </span>
     </div>
+
   </div>
 
 <script type="module">
@@ -215,25 +293,29 @@
 
   const chibiImg = document.getElementById("chibi-img");
   const stateEl = document.getElementById("state");
-  const progressBar = document.getElementById("progress-bar");
 
-  // Memantau perubahan status dari skrip modul RAWGAME secara aman
+  // Pantau perubahan status dari skrip exploit.
+  // Fitur ekspresi Seka-chan tetap aktif tanpa progress bar.
   const observer = new MutationObserver(() => {
     const bodyClass = document.body.className;
+
     if (bodyClass.includes("done")) {
       chibiImg.src = "chibi-success.png";
       stateEl.textContent = "Seka-chan Did it! ♥";
       stateEl.className = "ok";
-      progressBar.style.background = "linear-gradient(90deg, #10b981 0%, #059669 100%)";
+
     } else if (bodyClass.includes("fail")) {
       chibiImg.src = "chibi-failed.png";
       stateEl.textContent = "Seka-chan couldn't do it... TwT";
       stateEl.className = "bad";
-      progressBar.style.background = "linear-gradient(90deg, #f43f5e 0%, #e11d48 100%)";
     }
   });
 
-  observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+  observer.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"]
+  });
 </script>
+
 </body>
 </html>
