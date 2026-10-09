@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" manifest="cache.appcache">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,8 @@
   * { box-sizing: border-box; }
   body {
     font-family: 'Quicksand', 'Poppins', sans-serif;
-    background: radial-gradient(circle at 50% 20%, #f3e8ff 0%, #d8b4fe 50%, #9333ea 100%);
+    /* Gradasi pastel lembut yang ringan tanpa animasi partikel */
+    background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
     color: #2d2640;
     min-height: 100vh;
     margin: 0;
@@ -24,227 +25,157 @@
     user-select: none;
   }
 
-  /* Partikel Latar Belakang */
-  .particles {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 1;
-  }
-  .particle {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    animation: floatUp 8s linear infinite;
-  }
-  @keyframes floatUp {
-    0% { transform: translateY(105vh) scale(0.5); opacity: 0; }
-    50% { opacity: 0.8; }
-    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
-  }
-
-  /* Glassmorphism Main Panel - Diperbesar agar pas di layar TV PS4 */
+  /* Panel Utama - Ringan tanpa blur berat */
   .glass-panel {
-    position: relative;
-    z-index: 2;
-    background: rgba(255, 255, 255, 0.55);
-    backdrop-filter: blur(30px);
-    -webkit-backdrop-filter: blur(30px);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 0 35px 70px rgba(85, 50, 115, 0.3), inset 0 0 0 1px rgba(255, 255, 255, 0.7);
-    border-radius: 42px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 20px 40px rgba(116, 90, 138, 0.2);
+    border-radius: 36px;
     width: 100%;
     max-width: 750px;
-    padding: 48px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
-    gap: 28px;
-    animation: fadeIn 1s ease-out;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    gap: 24px;
   }
 
   /* Header Brand */
   .brand-header {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-    padding-bottom: 20px;
+    gap: 6px;
+    border-bottom: 2px solid rgba(216, 180, 254, 0.3);
+    padding-bottom: 16px;
     text-align: center;
   }
 
   h1 {
-    font-size: 40px;
+    font-size: 38px;
     font-weight: 700;
-    color: #3b2b4f;
+    color: #4c1d95;
     margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    text-shadow: 0 2px 12px rgba(255, 255, 255, 0.7);
   }
 
   .subtitle {
-    font-size: 16px;
-    color: #6a5585;
+    font-size: 15px;
+    color: #7c3aed;
     font-weight: 600;
     margin: 0;
-    letter-spacing: 0.04em;
   }
 
-  /* Stack Layout */
   .stack-container {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
   }
 
-  /* Chibi Floating Identity - Diperbesar */
+  /* Chibi Floating Identity */
   .chibi-floating-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    padding: 10px 0;
-  }
-  .chibi-floating-container::after {
-    content: '';
-    position: absolute;
-    width: 180px; height: 40px;
-    background: rgba(184, 134, 251, 0.4);
-    bottom: 0;
-    border-radius: 50%;
-    filter: blur(14px);
-    z-index: -1;
-    animation: pulseGlow 3s ease-in-out infinite;
-  }
-  @keyframes pulseGlow {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.25); opacity: 0.85; }
+    padding: 5px 0;
   }
 
   #chibi-img {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
     object-fit: contain;
-    filter: drop-shadow(0 18px 30px rgba(116, 90, 138, 0.35));
-    transition: transform 0.3s ease;
-    pointer-events: none;
+    filter: drop-shadow(0 10px 20px rgba(116, 90, 138, 0.25));
   }
 
-  /* Glass Sub-cards */
+  /* Sub-cards */
   .glass-card {
-    background: rgba(255, 255, 255, 0.65);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    border-radius: 28px;
-    padding: 28px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(233, 213, 255, 0.8);
+    border-radius: 24px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    box-shadow: 0 15px 35px rgba(116, 90, 138, 0.12);
+    box-shadow: 0 8px 20px rgba(116, 90, 138, 0.08);
   }
 
   .status-label {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
-    letter-spacing: 0.12em;
-    color: #8c73ab;
+    letter-spacing: 0.1em;
+    color: #9333ea;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   #state {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 700;
     color: #2d2640;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     line-height: 1.4;
   }
 
   #det {
-    font-size: 16px;
-    color: #6a5585;
+    font-size: 15px;
+    color: #6b21a8;
     font-weight: 600;
   }
 
-  /* Progress bar styling */
-  .progress-container { margin-top: 22px; }
+  /* Progress bar */
+  .progress-container { margin-top: 18px; }
   .progress-bar-bg {
     width: 100%;
-    background-color: rgba(230, 215, 245, 0.8);
-    height: 12px;
+    background-color: #f3e8ff;
+    height: 10px;
     border-radius: 999px;
     overflow: hidden;
-    box-shadow: inset 0 1px 5px rgba(0,0,0,0.08);
   }
   .progress-bar-fill {
     background: linear-gradient(90deg, #c084fc 0%, #ec4899 100%);
     height: 100%;
-    width: 66%;
+    width: 100%;
     border-radius: 999px;
-    box-shadow: 0 0 12px rgba(236, 72, 153, 0.6);
   }
 
   #cache {
-    font-size: 15px;
-    color: #8c73ab;
+    font-size: 14px;
+    color: #059669;
     font-weight: 600;
-    margin-top: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    margin-top: 10px;
   }
 
-  /* Footer Details */
+  /* Footer */
   .footer-info {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 13px;
-    color: #7b6499;
-    padding-top: 14px;
-    border-top: 1px solid rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    color: #7c3aed;
+    padding-top: 12px;
+    border-top: 2px solid rgba(216, 180, 254, 0.3);
     font-weight: 600;
   }
 
   .ok { color: #059669 !important; font-weight: 700; }
   .bad { color: #e11d48 !important; font-weight: 700; }
   .warn { color: #d97706 !important; font-weight: 700; }
-  #cache.cacheok { color: #059669 !important; }
 </style>
 </head>
 <body>
 
-  <!-- Partikel Latar Belakang -->
-  <div class="particles" id="particles"></div>
-
   <div class="glass-panel">
-    <!-- Brand Header -->
     <div class="brand-header">
       <h1>LytiaHEN (◍•ᴗ•◍)</h1>
       <p class="subtitle">Your ultimate console companion (๑>◡<๑)</p>
     </div>
 
-    <!-- Stack Content -->
     <div class="stack-container">
-      
-      <!-- Chibi Floating Identity -->
       <div class="chibi-floating-container">
-        <img id="chibi-img" src="chibi-loading.png" alt="Chibi">
+        <img id="chibi-img" src="chibi-idle.png" alt="Chibi">
       </div>
 
-      <!-- System Status Card -->
       <div class="glass-card">
         <div>
           <div class="status-label">SYSTEM STATUS</div>
-          <div id="state">detecting firmware...</div>
+          <div id="state">Ready to launch! (๑•̀ㅂ•́)و✧</div>
           <div id="det"></div>
         </div>
 
@@ -252,56 +183,24 @@
           <div class="progress-bar-bg">
             <div id="progress-bar" class="progress-bar-fill"></div>
           </div>
-          <div id="cache"></div>
+          <div id="cache">Offline ready & cached (◍•ᴗ•◍)</div>
         </div>
       </div>
-
     </div>
 
-    <!-- Footer Info -->
     <div class="footer-info">
-      <span>Forked From RAWGAME ♡ UI Designed By ayayashiori</span>
+      <span>Forked From RAWGAME ♡ UI By ayayashiori</span>
       <span>Made with love (◡‿◡✿)</span>
     </div>
   </div>
 
 <script>
-  // Generator partikel melayang otomatis di background
-  const particleContainer = document.getElementById('particles');
-  for (let i = 0; i < 20; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const size = Math.random() * 10 + 5;
-    p.style.width = size + 'px';
-    p.style.height = size + 'px';
-    p.style.left = Math.random() * 100 + 'vw';
-    p.style.animationDuration = (Math.random() * 6 + 5) + 's';
-    p.style.animationDelay = (Math.random() * 5) + 's';
-    particleContainer.appendChild(p);
-  }
-
   (function () {
       var stateEl = document.getElementById("state");
       var detEl = document.getElementById("det");
-      var cacheEl = document.getElementById("cache");
       var imgEl = document.getElementById("chibi-img");
 
-      function setState(t, c) { 
-          stateEl.textContent = t; 
-          stateEl.className = c || ""; 
-      }
-
-      function setChibi(filename) {
-          imgEl.src = filename;
-      }
-
-      function setCache(t, ok) { 
-          cacheEl.textContent = t; 
-          if (ok) cacheEl.className = "cacheok";
-      }
-
       var params = new URLSearchParams(location.search);
-
       var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
 
       var key = null, fwnum = null;
@@ -322,89 +221,19 @@
 
       var target = "jb.html" + location.search;
       
-      function go() { 
-          setState("Please wait, loading jailbreak... (っ˘ω˘ς)", "warn"); 
-          setChibi("chibi-loading.png");
-          location.replace(target); 
-      }
-
-      function waitForTap(msg, action) {
-          setState(msg, "warn");
-          setChibi("chibi-idle.png");
-          function fire() {
-              window.removeEventListener("click", fire);
-              window.removeEventListener("keydown", fire);
-              action();
-          }
-          window.addEventListener("click", fire);
-          window.addEventListener("keydown", fire);
-      }
-
       if (!supported) {
           setState("UNSUPPORTED FIRMWARE (╥﹏╥)", "bad");
-          setChibi("chibi-failed.png");
-          waitForTap("UNSUPPORTED (" + (key || "unknown") + ") -- Ready when you are! Press any key (but not exit key!)", go);
+          imgEl.src = "chibi-failed.png";
           return;
       }
 
-      var ac = window.applicationCache;
-      if (!ac || !document.documentElement.hasAttribute("manifest")) {
-          go();
-      } else if (!navigator.onLine) {
-          setCache("offline -- from cache (•̀loé́•́)", true);
-          setChibi("chibi-idle.png");
-          go();
-      } else if (ac.status === ac.IDLE) {
-          setCache("cached (◍•ᴗ•◍)", true);
-          setChibi("chibi-idle.png");
-          go();
-      } else if (ac.status === ac.UPDATEREREADY) {
-          try { ac.swapCache(); } catch (e) {}
-          setCache("update downloaded (≧∇≦)/", true);
-          waitForTap("UPDATE READY -- Ready when you are! Press any key (but not exit key!)", function () { location.reload(); });
-      } else {
-          setCache("checking cache... (¬_¬)");
-          setChibi("chibi-loading.png");
-          
-          ac.addEventListener("downloading", function () { 
-              setCache("caching for offline (first run)... (๑•̀ㅂ•́)و✧"); 
-          }, false);
-          
-          ac.addEventListener("progress", function (e) {
-              if (e && e.total)
-                  setCache("caching " + Math.round((e.loaded / e.total) * 100) + "% (๑˃ᴗ˂)ﻭ");
-          }, false);
-          
-          ac.addEventListener("cached", function () {
-              setCache("cached for offline use (◕ᴗ◕✿)", true);
-              setChibi("chibi-success.png");
-              waitForTap("CACHED (first run) -- Ready when you are! Press any key (but not exit key!)", go);
-          }, false);
-          
-          ac.addEventListener("updateready", function () {
-              try { ac.swapCache(); } catch (e) {}
-              setCache("update downloaded (≧∇≦)/", true);
-              waitForTap("UPDATE READY -- Ready when you are! Press any key (but not exit key!)", function () { location.reload(); });
-          }, false);
-          
-          ac.addEventListener("noupdate", function () {
-              setCache("cached -- offline ready (◍•ᴗ•◍)", true);
-              setChibi("chibi-idle.png");
-              go();
-          }, false);
-          
-          ac.addEventListener("error", function () {
-              setCache("cache unavailable (×_×)");
-              setChibi("chibi-failed.png");
-              waitForTap("CACHE FAILED -- Ready when you are! Press any key (but not exit key!)", go);
-          }, false);
-          
-          ac.EventArgs?.addEventListener("obsolete", function () {
-              setCache("cache obsolete (っ˘ω˘ς)");
-              setChibi("chibi-failed.png");
-              waitForTap("CACHE OBSOLETE -- Ready when you are! Press any key (but not exit key!)", go);
-          }, false);
-      }
+      setTimeout(function() {
+          setState("Loading exploit payload... (っ˘ω˘ς)", "warn");
+          imgEl.src = "chibi-loading.png";
+          setTimeout(function() {
+              location.replace(target);
+          }, 600);
+      }, 800);
   })();
 </script>
 </body>
