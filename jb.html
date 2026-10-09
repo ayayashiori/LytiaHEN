@@ -1,190 +1,239 @@
 <!doctype html>
 <html lang="en" manifest="cache.appcache">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>LytiaHEN Exploit (◍•ᴗ•◍)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
-    <style>
-      html,
-      body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #f3edf9 0%, #e2d1f0 50%, #f7f2fb 100%);
-        color: #2d2640;
-        font-family: 'Quicksand', sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-      }
-      #brand {
-        text-align: center;
-        padding: 12px 16px;
-        background: rgba(244, 238, 250, 0.7);
-        border-bottom: 1px solid rgba(222, 196, 235, 0.4);
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-      #brand b {
-        font-size: 15px;
-        font-weight: 700;
-        letter-spacing: 0.1em;
-        color: #5b3e7a;
-      }
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LytiaHEN Exploit (っ˘ω˘ς) </title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Quicksand', 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
+    color: #2d2640;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    overflow-x: hidden;
+    user-select: none;
+  }
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid rgba(255, 255, 255, 0.95);
+    box-shadow: 0 20px 40px rgba(116, 90, 138, 0.2);
+    border-radius: 36px;
+    width: 100%;
+    max-width: 750px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .brand-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-bottom: 2px solid rgba(216, 180, 254, 0.3);
+    padding-bottom: 16px;
+    text-align: center;
+  }
+  h1 {
+    font-size: 38px;
+    font-weight: 700;
+    color: #4c1d95;
+    margin: 0;
+  }
+  .subtitle {
+    font-size: 15px;
+    color: #7c3aed;
+    font-weight: 600;
+    margin: 0;
+  }
+  .stack-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .chibi-floating-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 0;
+  }
+  #chibi-img {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 20px rgba(116, 90, 138, 0.25));
+  }
+  .glass-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(233, 213, 255, 0.8);
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 8px 20px rgba(116, 90, 138, 0.08);
+  }
+  .status-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #9333ea;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  #state {
+    font-size: 20px;
+    font-weight: 700;
+    color: #2d2640;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  
+  /* Area elemen asli RAWGAME yang disesuaikan tampilannya agar serasi */
+  #spin {
+    width: 40px;
+    height: 40px;
+    margin: 10px auto;
+    border: 4px solid #e9d5ff;
+    border-top-color: #9333ea;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  #msg {
+    font-size: 16px;
+    font-weight: 700;
+    color: #e11d48;
+    margin-top: 8px;
+    display: none;
+  }
+  #wrap { padding: 0; }
+  
+  /* Sembunyikan elemen mentah saat normal, munculkan saat mode log (?log=1) */
+  body.done #spin { display: none; }
+  body.fail #spin { display: none; }
+  body.fail #msg { display: block; }
+  
+  body.log #spin, body.log #msg, body.log .chibi-floating-container { display: none; }
+  body.log #state { display: block; font-size: 20px; color: #4c1d95; }
+  body.log #out {
+    display: block;
+    white-space: pre-wrap;
+    font: 12px/1.45 Consolas, monospace;
+    background: #ffffff;
+    border: 1px solid rgba(233, 213, 255, 0.8);
+    border-radius: 12px;
+    padding: 12px;
+    height: 200px;
+    overflow-y: auto;
+    color: #2d2640;
+    margin-top: 10px;
+  }
 
-      /* Container card ala LytiaHEN */
-      .exploit-card {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(222, 196, 235, 0.6);
-        box-shadow: 0 20px 50px rgba(116, 90, 138, 0.15);
-        border-radius: 24px;
-        padding: 30px;
-        width: 90%;
-        max-width: 420px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 16px;
-      }
+  .progress-container { margin-top: 18px; }
+  .progress-bar-bg {
+    width: 100%;
+    background-color: #f3e8ff;
+    height: 10px;
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    background: linear-gradient(90deg, #c084fc 0%, #ec4899 100%);
+    height: 100%;
+    width: 100%;
+    border-radius: 999px;
+  }
 
-      /* Chibi preview di jb.html */
-      .chibi-mini-box {
-        width: 120px;
-        height: 120px;
-        background: #faf6fd;
-        border: 2px dashed #e2cff0;
-        border-radius: 50%;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-      }
-      .chibi-mini-box img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-      }
-
-      /* Spinner imut nuansa anime */
-      #spin {
-        width: 40px;
-        height: 40px;
-        border: 4px solid #f0e6f6;
-        border-top-color: #d8b4fe;
-        border-radius: 50%;
-        animation: spin 0.9s linear infinite;
-        margin: 0 auto;
-      }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      #msg {
-        font-size: 16px;
-        font-weight: 700;
-        color: #d97706;
-        line-height: 1.4;
-      }
-
-      body.fail #msg {
-        color: #ef4444;
-      }
-      body.done #spin {
-        display: none;
-      }
-      body.fail #spin {
-        display: none;
-      }
-
-      /* ?log=1 styling */
-      body.log #spin,
-      body.log .exploit-card {
-        display: none;
-      }
-      body.log #wrap {
-        padding: 80px 18px 20px;
-        width: 100%;
-        max-width: 620px;
-        display: block !important;
-      }
-      #wrap {
-        display: none;
-      }
-      #state {
-        font-size: 20px;
-        font-weight: 700;
-        color: #3b2b4f;
-        margin-bottom: 10px;
-        text-align: center;
-      }
-      #out {
-        white-space: pre-wrap;
-        font: 12px/1.45 Consolas, monospace;
-        background: rgba(255, 255, 255, 0.85);
-        border: 1px solid rgba(222, 196, 235, 0.6);
-        border-radius: 16px;
-        padding: 16px;
-        height: calc(100vh - 160px);
-        overflow-y: auto;
-        color: #5b3e7a;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="brand">
-      <b>LytiaHEN Exploit (っ˘ω˘ς)</b>
+  .footer-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #7c3aed;
+    padding-top: 12px;
+    border-top: 2px solid rgba(216, 180, 254, 0.3);
+    font-weight: 600;
+  }
+  .ok { color: #059669 !important; font-weight: 700; }
+  .bad { color: #e11d48 !important; font-weight: 700; }
+  .warn { color: #d97706 !important; font-weight: 700; }
+</style>
+</head>
+<body class="safe">
+  <div class="glass-panel">
+    <div class="brand-header">
+      <h1>LytiaHEN Exploit </h1>
+      <p class="subtitle">Executing jailbreak payload</p>
     </div>
 
-    <!-- Kotak Tampilan Eksploitasi yang Senada dengan index.html -->
-    <div class="exploit-card" id="exploit-ui">
-      <div class="chibi-mini-box">
-        <img id="jb-chibi" src="chibi-loading.png" alt="Chibi">
+    <div class="stack-container">
+      <div class="chibi-floating-container">
+        <img id="chibi-img" src="chibi-loading.png" alt="Chibi">
       </div>
-      <div id="spin"></div>
-      <div id="msg">Please wait, I'm accessing your RAM! (っ˘ω˘ς)</div>
+
+      <div class="glass-card">
+        <div>
+          <div class="status-label">EXPLOIT STATUS</div>
+          <div id="state">Running exploit payload...</div>
+          
+          <!-- Elemen kontrol inti RAWGAME -->
+          <div id="spin"></div>
+          <div id="msg">Restart your console</div>
+          <div id="wrap">
+            <div id="out"></div>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar-bg">
+            <div id="progress-bar" class="progress-bar-fill"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="wrap">
-      <div id="state"></div>
-      <div id="out"></div>
+    <div class="footer-info">
+      <span>Forked From RAWGAME ♥ UI By ayayashiori</span>
+      <span>Pstt, my name is Seka-chan! Get it? Because Orbis means world so is sekai ♥</span>
     </div>
+  </div>
 
-    <script>
-      // Listener otomatis untuk mengubah gambar chibi saat proses jb.js mengubah status/kelas body
-      const observer = new MutationObserver(() => {
-        const img = document.getElementById('jb-chibi');
-        const msg = document.getElementById('msg');
-        if (document.body.classList.contains('done')) {
-          img.src = 'chibi-success.png';
-          msg.textContent = "Done! Enjoy your game, Bro! (≧◡≦) ♡";
-          msg.style.color = "#16a34a";
-        } else if (document.body.classList.contains('fail')) {
-          img.src = 'chibi-failed.png';
-          msg.textContent = "Uwaahhh! Exploit failed, please restart your console! (╥﹏╥)";
-          msg.style.color = "#ef4444";
-        }
-      });
-      observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
-    </script>
+<script type="module">
+  import "./jb.js?v=10";
 
-    <script type="module">
-      import "./jb.js?v=10";
-    </script>
-  </body>
+  const chibiImg = document.getElementById("chibi-img");
+  const stateEl = document.getElementById("state");
+  const progressBar = document.getElementById("progress-bar");
+
+  // Memantau perubahan status dari skrip modul RAWGAME secara aman
+  const observer = new MutationObserver(() => {
+    const bodyClass = document.body.className;
+    if (bodyClass.includes("done")) {
+      chibiImg.src = "chibi-success.png";
+      stateEl.textContent = "GoldHEN Loaded Successfully! ♥";
+      stateEl.className = "ok";
+      progressBar.style.background = "linear-gradient(90deg, #10b981 0%, #059669 100%)";
+    } else if (bodyClass.includes("fail")) {
+      chibiImg.src = "chibi-failed.png";
+      stateEl.textContent = "Exploit Failed / Out of Memory ✕";
+      stateEl.className = "bad";
+      progressBar.style.background = "linear-gradient(90deg, #f43f5e 0%, #e11d48 100%)";
+    }
+  });
+
+  observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+</script>
+</body>
 </html>
