@@ -174,8 +174,8 @@
 <body class="safe">
   <div class="glass-panel">
     <div class="brand-header">
-      <h1>LytiaHEN Exploit </h1>
-      <p class="subtitle">Executing jailbreak payload</p>
+      <h1>LytiaHEN Loader (っ˘ω˘ς) </h1>
+      <p class="subtitle">Here we go~</p>
     </div>
 
     <div class="stack-container">
@@ -185,12 +185,12 @@
 
       <div class="glass-card">
         <div>
-          <div class="status-label">EXPLOIT STATUS</div>
-          <div id="state">Running exploit payload...</div>
+          <div class="status-label">Seka-Chan Status</div>
+          <div id="state">Seka-Chan is looking for vulnerabilities... </div>
           
           <!-- Elemen kontrol inti RAWGAME -->
           <div id="spin"></div>
-          <div id="msg">Restart your console</div>
+          <div id="msg">Uh oh, I messed up! better start over now TwT</div>
           <div id="wrap">
             <div id="out"></div>
           </div>
@@ -206,7 +206,7 @@
 
     <div class="footer-info">
       <span>Forked From RAWGAME ♥ UI By ayayashiori</span>
-      <span>Pstt, my name is Seka-chan! Get it? Because Orbis means world so is sekai ♥</span>
+      <span>Psst! I'm Seka-chan! Orbis means world, and sekai means world in Japanese. Get it? ♥</span>
     </div>
   </div>
 
@@ -222,12 +222,12 @@
     const bodyClass = document.body.className;
     if (bodyClass.includes("done")) {
       chibiImg.src = "chibi-success.png";
-      stateEl.textContent = "GoldHEN Loaded Successfully! ♥";
+      stateEl.textContent = "Seka-chan Did it! ♥";
       stateEl.className = "ok";
       progressBar.style.background = "linear-gradient(90deg, #10b981 0%, #059669 100%)";
     } else if (bodyClass.includes("fail")) {
       chibiImg.src = "chibi-failed.png";
-      stateEl.textContent = "Exploit Failed / Out of Memory ✕";
+      stateEl.textContent = "Seka-chan couldn't do it... TwT";
       stateEl.className = "bad";
       progressBar.style.background = "linear-gradient(90deg, #f43f5e 0%, #e11d48 100%)";
     }
