@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LytiaHEN (◍•ᴗ•◍)</title>
+<title>LytiaHEN</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -11,7 +11,6 @@
   * { box-sizing: border-box; }
   body {
     font-family: 'Quicksand', 'Poppins', sans-serif;
-    /* Gradasi pastel lembut yang ringan tanpa animasi partikel */
     background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 50%, #d8b4fe 100%);
     color: #2d2640;
     min-height: 100vh;
@@ -24,8 +23,6 @@
     overflow-x: hidden;
     user-select: none;
   }
-
-  /* Panel Utama - Ringan tanpa blur berat */
   .glass-panel {
     background: rgba(255, 255, 255, 0.85);
     border: 2px solid rgba(255, 255, 255, 0.95);
@@ -38,8 +35,6 @@
     flex-direction: column;
     gap: 24px;
   }
-
-  /* Header Brand */
   .brand-header {
     display: flex;
     flex-direction: column;
@@ -48,43 +43,35 @@
     padding-bottom: 16px;
     text-align: center;
   }
-
   h1 {
     font-size: 38px;
     font-weight: 700;
     color: #4c1d95;
     margin: 0;
   }
-
   .subtitle {
     font-size: 15px;
     color: #7c3aed;
     font-weight: 600;
     margin: 0;
   }
-
   .stack-container {
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
-
-  /* Chibi Floating Identity */
   .chibi-floating-container {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 5px 0;
   }
-
   #chibi-img {
     width: 200px;
     height: 200px;
     object-fit: contain;
     filter: drop-shadow(0 10px 20px rgba(116, 90, 138, 0.25));
   }
-
-  /* Sub-cards */
   .glass-card {
     background: rgba(255, 255, 255, 0.9);
     border: 1px solid rgba(233, 213, 255, 0.8);
@@ -95,7 +82,6 @@
     justify-content: space-between;
     box-shadow: 0 8px 20px rgba(116, 90, 138, 0.08);
   }
-
   .status-label {
     font-size: 12px;
     font-weight: 700;
@@ -104,7 +90,6 @@
     text-transform: uppercase;
     margin-bottom: 8px;
   }
-
   #state {
     font-size: 20px;
     font-weight: 700;
@@ -112,14 +97,11 @@
     margin-bottom: 8px;
     line-height: 1.4;
   }
-
   #det {
     font-size: 15px;
     color: #6b21a8;
     font-weight: 600;
   }
-
-  /* Progress bar */
   .progress-container { margin-top: 18px; }
   .progress-bar-bg {
     width: 100%;
@@ -134,15 +116,12 @@
     width: 100%;
     border-radius: 999px;
   }
-
   #cache {
     font-size: 14px;
     color: #059669;
     font-weight: 600;
     margin-top: 10px;
   }
-
-  /* Footer */
   .footer-info {
     display: flex;
     justify-content: space-between;
@@ -153,56 +132,47 @@
     border-top: 2px solid rgba(216, 180, 254, 0.3);
     font-weight: 600;
   }
-
   .ok { color: #059669 !important; font-weight: 700; }
   .bad { color: #e11d48 !important; font-weight: 700; }
   .warn { color: #d97706 !important; font-weight: 700; }
 </style>
 </head>
 <body>
-
   <div class="glass-panel">
     <div class="brand-header">
-      <h1>LytiaHEN (◍•ᴗ•◍)</h1>
-      <p class="subtitle">Your ultimate console companion (๑>◡<๑)</p>
+      <h1>LytiaHEN</h1>
+      <p class="subtitle">Your ultimate console companion</p>
     </div>
-
     <div class="stack-container">
       <div class="chibi-floating-container">
         <img id="chibi-img" src="chibi-idle.png" alt="Chibi">
       </div>
-
       <div class="glass-card">
         <div>
           <div class="status-label">SYSTEM STATUS</div>
-          <div id="state">Ready to launch! (๑•̀ㅂ•́)و✧</div>
+          <div id="state">Ready to launch!</div>
           <div id="det"></div>
         </div>
-
         <div class="progress-container">
           <div class="progress-bar-bg">
             <div id="progress-bar" class="progress-bar-fill"></div>
           </div>
-          <div id="cache">Offline ready & cached (◍•ᴗ•◍)</div>
+          <div id="cache">Offline ready & cached</div>
         </div>
       </div>
     </div>
-
     <div class="footer-info">
-      <span>Forked From RAWGAME ♡ UI By ayayashiori</span>
-      <span>Made with love (◡‿◡✿)</span>
+      <span>Forked From RAWGAME | UI By ayayashiori</span>
+      <span>Made with love</span>
     </div>
   </div>
-
 <script>
   (function () {
       var stateEl = document.getElementById("state");
       var detEl = document.getElementById("det");
       var imgEl = document.getElementById("chibi-img");
-
       var params = new URLSearchParams(location.search);
       var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
-
       var key = null, fwnum = null;
       var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
       if (m) {
@@ -211,24 +181,19 @@
           key = m[1] + "." + ms;
           fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
       }
-
       var forced = params.get("force") === "1";
       var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
-      
       detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
-          + (supported ? " &middot; <span class='ok'>supported (✿◠‿◠)</span>"
-                       : " &middot; <span class='bad'>not in kernel table (×_×)</span>");
-
+          + (supported ? " &middot; <span class='ok'>supported</span>"
+                       : " &middot; <span class='bad'>not in kernel table</span>");
       var target = "jb.html" + location.search;
-      
       if (!supported) {
-          setState("UNSUPPORTED FIRMWARE (╥﹏╥)", "bad");
+          setState("UNSUPPORTED FIRMWARE", "bad");
           imgEl.src = "chibi-failed.png";
           return;
       }
-
       setTimeout(function() {
-          setState("Loading exploit payload... (っ˘ω˘ς)", "warn");
+          setState("Loading exploit payload...", "warn");
           imgEl.src = "chibi-loading.png";
           setTimeout(function() {
               location.replace(target);
