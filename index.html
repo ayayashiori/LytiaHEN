@@ -1,9 +1,9 @@
-<!doctype html>
-<html lang="en" manifest="cache.appcache">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SekaHEN Exploit (っ˘ω˘ς)</title>
+<title>SekaHEN ★</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -97,50 +97,18 @@
     margin-bottom: 8px;
     line-height: 1.4;
   }
-  
-  /* Area elemen asli RAWGAME[span_0](start_span)[span_0](end_span) */
-  #spin {
-    width: 40px;
-    height: 40px;
-    margin: 15px auto 5px auto;
-    border: 4px solid #e9d5ff;
-    border-top-color: #9333ea;
-    border-radius: 50%;
-    animation: spin 0.9s linear infinite;
+  #det {
+    font-size: 15px;
+    color: #6b21a8;
+    font-weight: 600;
+    margin-top: 4px;
   }
-  @keyframes spin {
-    to { transform: rotate(360deg); }
+  #cache {
+    font-size: 14px;
+    color: #059669;
+    font-weight: 600;
+    margin-top: 14px;
   }
-  #msg {
-    font-size: 16px;
-    font-weight: 700;
-    color: #e11d48;
-    margin-top: 8px;
-    display: none;
-    text-align: center;
-  }
-  #wrap { padding: 0; }
-  
-  body.done #spin { display: none; }
-  body.fail #spin { display: none; }
-  body.fail #msg { display: block; }
-  
-  body.log #spin, body.log #msg, body.log .chibi-floating-container { display: none; }
-  body.log #state { display: block; font-size: 20px; color: #4c1d95; }
-  body.log #out {
-    display: block;
-    white-space: pre-wrap;
-    font: 12px/1.45 Consolas, monospace;
-    background: #ffffff;
-    border: 1px solid rgba(233, 213, 255, 0.8);
-    border-radius: 12px;
-    padding: 12px;
-    height: 200px;
-    overflow-y: auto;
-    color: #2d2640;
-    margin-top: 10px;
-  }
-
   .footer-info {
     display: flex;
     justify-content: space-between;
@@ -156,67 +124,77 @@
   .warn { color: #d97706 !important; font-weight: 700; }
 </style>
 </head>
-<body class="safe">
+<body>
   <div class="glass-panel">
     <div class="brand-header">
-      <h1>SekaHEN Loader (っ˘ω˘ς)</h1>
-      <p class="subtitle">Here we go~</p>
+      <h1>SekaHEN (っ˘ω˘ς)</h1>
+      <p class="subtitle">Your ultimate console companion</p>
     </div>
-
     <div class="stack-container">
       <div class="chibi-floating-container">
-        <img id="chibi-img" src="chibi-loading.png" alt="Chibi">
+        <!-- Pastikan file gambar awal mengarah ke chibi-idle.png -->
+        <img id="chibi-img" src="chibi-idle.png" alt="Chibi">
       </div>
-
       <div class="glass-card">
         <div>
-          <div class="status-label">Seka-Chan Status</div>
-          <div id="state">Seka-chan is looking for vulnerabilities...</div>
-          
-          <!-- Elemen kontrol inti RAWGAME[span_1](start_span)[span_1](end_span) -->
-          <div id="spin"></div>
-          <div id="msg">Uh oh, I messed up! better start over now TwT</div>
-          <div id="wrap">
-            <div id="out"></div>
-          </div>
+          <div class="status-label">Seka-chan Status</div>
+          <div id="state">Ready to launch! ♥</div>
+          <div id="det"></div>
         </div>
+        <div id="cache">Offline ready & cached</div>
       </div>
     </div>
-
     <div class="footer-info">
       <span>Forked From RAWGAME ♥ UI By ayayashiori</span>
-      <span>Psst! I'm Seka-chan! Orbis means world, and sekai means world in Japanese. Get it? ♥</span>
+      <span>Made with love ♡</span>
     </div>
   </div>
+<script>
+  (function () {
+      var stateEl = document.getElementById("state");
+      var detEl = document.getElementById("det");
+      var imgEl = document.getElementById("chibi-img");
+      
+      function setState(msg, cls) {
+          stateEl.textContent = msg;
+          stateEl.className = cls || "";
+      }
 
-<script type="module">
-  import "./jb.js?v=10";[span_2](start_span)[span_2](end_span)
+      var params = new URLSearchParams(location.search);
+      var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
+      var key = null, fwnum = null;
+      var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+      if (m) {
+          var ms = parseInt(m[2], 16).toString(16);
+          if (ms.length < 2) ms = "0" + ms;
+          key = m[1] + "." + ms;
+          fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+      }
+      var forced = params.get("force") === "1";
+      var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
+      
+      detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
+          + (supported ? " &middot; <span class='ok'>supported :3</span>"
+                       : " &middot; <span class='bad'>not in kernel table</span>");
 
-  const chibiImg = document.getElementById("chibi-img");
-  const stateEl = document.getElementById("state");
+      var target = "jb.html" + location.search;
 
-  const checkStatus = () => {
-    const bodyClass = document.body.className;
-    const outText = document.getElementById("out") ? document.getElementById("out").textContent : "";
-    
-    if (bodyClass.includes("done") || outText.includes("GoldHEN") || outText.includes("Loaded") || outText.includes("Done")) {
-      chibiImg.src = "chibi-success.png";
-      stateEl.textContent = "Seka-chan Did it! ♥";
-      stateEl.className = "ok";
-    } else if (bodyClass.includes("fail") || outText.includes("Fail") || outText.includes("Error")) {
-      chibiImg.src = "chibi-failed.png";
-      stateEl.textContent = "Seka-chan couldn't do it... TwT";
-      stateEl.className = "bad";
-    }
-  };
+      // Jika firmware tidak didukung atau tidak dikenali, ubah gambar ke chibi gagal secara eksplisit
+      if (!supported && !forced) {
+          setState("Seka-Chan doesn't know how to do it, this device is so strange TwT", "bad");
+          imgEl.src = "chibi-failed.png";
+          return;
+      }
 
-  const observer = new MutationObserver(checkStatus);
-  observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-  
-  const outEl = document.getElementById("out");
-  if (outEl) {
-    observer.observe(outEl, { childList: true, subtree: true, characterData: true });
-  }
+      // Jika didukung, lanjutkan proses pemuatan dengan chibi loading
+      setTimeout(function() {
+          setState("Loading exploit payload... ➔", "warn");
+          imgEl.src = "chibi-loading.png";
+          setTimeout(function() {
+              location.replace(target);
+          }, 500);
+      }, 700);
+  })();
 </script>
 </body>
 </html>
