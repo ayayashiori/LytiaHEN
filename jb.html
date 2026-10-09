@@ -98,7 +98,7 @@
     line-height: 1.4;
   }
   
-  /* Elemen kontrol inti RAWGAME[span_0](start_span)[span_0](end_span) */
+  /* Spinner bawaan RAWGAME[span_1](start_span)[span_1](end_span) */
   #spin {
     width: 40px;
     height: 40px;
@@ -120,8 +120,7 @@
     text-align: center;
   }
   #wrap { padding: 0; }
-  #state, #out { display: none; } /* Menyembunyikan elemen mentah RAWGAME[span_1](start_span)[span_1](end_span) */
-
+  
   body.done #spin { display: none; }
   body.fail #spin { display: none; }
   body.fail #msg { display: block; }
@@ -180,25 +179,28 @@
   const chibiImg = document.getElementById("chibi-img");
   const stateEl = document.getElementById("state");
   const msgEl = document.getElementById("msg");
+  let isLocked = false;
 
-  // Fungsi pemantau yang membaca perubahan kelas body dan kemunculan pesan error asli
   const checkStatus = () => {
+    if (isLocked) return; // Kalau sudah terkunci status sukses/gagal, jangan diubah lagi
+
     const bodyClass = document.body.className;
     const isMsgVisible = window.getComputedStyle(msgEl).display !== "none" || bodyClass.includes("fail");
     const isDone = bodyClass.includes("done");
 
     if (isDone) {
+      isLocked = true;
       chibiImg.src = "chibi-success.png";
       stateEl.textContent = "Seka-chan Did it! ♥";
       stateEl.className = "ok";
     } else if (isMsgVisible) {
+      isLocked = true;
       chibiImg.src = "chibi-failed.png";
       stateEl.textContent = "Seka-chan couldn't do it... TwT";
       stateEl.className = "bad";
     }
   };
 
-  // Gunakan MutationObserver untuk memantau perubahan status secara real-time
   const observer = new MutationObserver(checkStatus);
   observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
   observer.observe(msgEl, { attributes: true, attributeFilter: ["style"] });
